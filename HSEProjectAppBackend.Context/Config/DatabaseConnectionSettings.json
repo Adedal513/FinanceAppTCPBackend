@@ -1,0 +1,7 @@
+﻿{
+	"Host": "ec2-34-242-8-97.eu-west-1.compute.amazonaws.com",
+	"Database": "dehncl3mtaaib5",
+	"User": "pkpjijzdqxxplx",
+	"Port": "5432",
+	"Password": "password"
+}
