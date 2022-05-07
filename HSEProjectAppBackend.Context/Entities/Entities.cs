@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Numerics;
 using Newtonsoft.Json;
 
 namespace HSEProjectAppBackend.Context.Entities;
@@ -40,14 +41,37 @@ public class Company : Entity
     [JsonProperty] [Column("sector")] public string Sector { get; private set; }
 
     [JsonProperty] [Column("industry")] public string Industry { get; private set; }
+
+    [JsonProperty] [NotMapped] public BalanceSheet BalanceSheet { get; private set; } 
 }
 
 [Table("portfolios")]
-public class Portfolio
+public class Portfolio : Entity
 {
     [JsonProperty] [Key, Column("pid")] public int Pid { get; private set; }
 
     [JsonProperty] [Key, Column("uid")] [ForeignKey("users.uid")]  public int Uid { get; private set; }
 
     [JsonProperty] [Column("symbol")] public List<string> Companies { get; private set; }
+}
+
+public class BalanceSheet : Entity
+{
+    [JsonProperty] [Key, Column("symbol")] public string Symbol { get; private set; }
+
+    [JsonIgnore] public Company Company { get; private set; }
+
+    [JsonProperty] [Column("reported_currency")] public string ReportedCurrency { get; private set; }
+
+    [JsonProperty] [Column("total_current_assets")] public BigInteger TotalCurrentAssets { get; private set; }
+     
+    [JsonProperty] [Column("total_assets")] public BigInteger TotalAssets { get; private set; }
+
+    [JsonProperty] [Column("total_current_liabilities")] public BigInteger TotalCurrentLiabilities { get; private set; }
+
+    [JsonProperty] [Column("total_liabilities")] public BigInteger TotalLiabilities { get; private set; }
+
+    [JsonProperty] [Column("common_stock")] public BigInteger CurrentStock { get; private set; }
+
+
 }

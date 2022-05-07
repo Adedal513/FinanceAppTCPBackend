@@ -20,12 +20,14 @@ public class ApplicationContext : DbContext
 
     public DbSet<Company> Companies { get; set; }
 
-    public DbSet<Portfolio> Portfolios { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Portfolio>()
-            .HasKey(u => new {u.Uid, u.Pid});
+
+        modelBuilder.Entity<Company>()
+            .HasOne(p => p.BalanceSheet)
+            .WithOne(p => p.Company);
+
         modelBuilder.Entity<User>()
             .HasMany(p => p.Portfolios)
             .WithOne()
