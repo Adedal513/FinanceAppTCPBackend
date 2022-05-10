@@ -36,13 +36,45 @@ namespace HSEProjectAppBackend.UTesting
         }
 
         [Test]
-        public void TestPortfolioParse()
+        public void TestCompany()
         {
             ApplicationContext context = new ApplicationContext();
 
-            var portfolios = context.Portfolios.ToList();
+            var companies = context.Companies.ToList();
 
-            Assert.AreEqual(portfolios[0].Uid, 1);
+            Assert.IsNotNull(companies[0].Symbol, "A");
+        }
+
+        [Test]
+        public void TestBSParse()
+        {
+            ApplicationContext context = new ApplicationContext();
+
+            var sheets = context.BalanceSheets.ToList();
+
+            Assert.AreEqual(sheets[0].Symbol, "A");
+        }
+
+        [Test]
+        public void TestBSC()
+        {
+            ApplicationContext context = new ApplicationContext();
+
+            var companies = context.Metrics.ToList();
+
+            Assert.AreEqual(companies[0].PE, 30.72);
+        }
+
+        [Test]
+        public void TestRelationship()
+        {
+            ApplicationContext context = new ApplicationContext();
+
+            var companies = context.Companies.ToList();
+            var balance_sheets = context.BalanceSheets.ToList();
+
+            Assert.AreEqual(balance_sheets[0].Symbol, "A");
+            Assert.AreEqual(companies[0].BalanceSheet.Symbol, "A");
         }
     }
 }
