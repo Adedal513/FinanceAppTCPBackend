@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using HSE_Finance_App_Backend.Core;
 using HSEProjectAppBackend.Context;
@@ -75,6 +76,21 @@ namespace HSEProjectAppBackend.UTesting
 
             Assert.AreEqual(balance_sheets[0].Symbol, "A");
             Assert.AreEqual(companies[0].BalanceSheet.Symbol, "A");
+        }
+
+        [Test]
+        public void TestSerialization()
+        {
+            ApplicationContext context = new ApplicationContext();
+
+            var companies = context.Companies.ToList();
+            var balance_sheets = context.BalanceSheets.ToList();
+            var income_statements = context.IncomeStatements.ToList();
+            var cash_flows = context.CashFlows.ToList();
+            var metrics = context.Metrics.ToList();
+
+            File.WriteAllText("deserialization.txt", companies[0].ToJson());
+            Assert.IsTrue(true);
         }
     }
 }

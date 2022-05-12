@@ -109,7 +109,7 @@ public class CashFlow : Entity
     [JsonProperty] [Column("operating_cash_flow")] public BigInteger? OperatingCF { get; private set; }
     [JsonProperty][Column("investment_cash_flow")] public BigInteger? InvestmentCF { get; private set; }
     [JsonProperty][Column("financing_cash_flow")] public BigInteger? FinancingCF { get; private set; }
-    [JsonProperty][Column("change_in_cash_flow")] public BigInteger? ChangeInCF { get; private set; }
+    [JsonProperty][Column("change_in_cash_and_eq")] public BigInteger? ChangeInCF { get; private set; }
     [JsonIgnore] public Company Company { get; private set; }
 }
 

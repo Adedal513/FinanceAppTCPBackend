@@ -1,4 +1,5 @@
-﻿using HSEProjectAppBackend.Context;
+﻿using System.Runtime.CompilerServices;
+using HSEProjectAppBackend.Context;
 using HSEProjectAppBackend.Context.Entities;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -61,34 +62,50 @@ public class CompanyTools : IEntityTools
 {
     private static readonly IConfigurationBuilder Builder =
         new ConfigurationBuilder().AddJsonFile(@"Configuration\CompanyToolsSettings.json");
+    public List<Company> companies;
+    public List<BalanceSheet> balances;
+    public List<IncomeStatement> incomes;
+    public List<CashFlow> cashflows;
+    public List<Metrics> metrics;
+
+    public CompanyTools()
+    {
+        using (var context = new ApplicationContext())
+        {
+            companies = context.Companies.ToList();
+            balances = context.BalanceSheets.ToList();
+            incomes = context.IncomeStatements.ToList();
+            cashflows = context.CashFlows.ToList();
+            metrics = context.Metrics.ToList();
+        }
+    }
 
     public string GetCompany(string symbol)
     {
         var response = new Dictionary<string, string>();
 
-        using (var context = new ApplicationContext())
+        var company = this.companies.FirstOrDefault(x => x.Symbol == symbol);
+
+        if (company != null)
         {
-            var company = context.Companies.FirstOrDefault(x => x.Symbol == symbol);
-
-            if (company != null)
-                return company.ToJson();
-
-            response.Add("Status", "False");
+            response.Add("Status", "True");
+            response.Add("Company", company.ToJson());
 
             return ResponseBuilder.Builder(response);
         }
+
+        response.Add("Status", "False");
+
+        return ResponseBuilder.Builder(response);
     }
 
-    public static string GetCompaniesWithOffset(int offset, int amount)
+    public string GetCompaniesWithOffset(int offset, int amount)
     {
         var response = new Dictionary<string, string>();
 
-        using (var context = new ApplicationContext())
-        {
-            var companies = context.Companies.ToList().Skip(offset - 1).Take(amount).ToList();
+        var res_companies = this.companies.Skip(offset - 1).Take(amount).ToList();
 
-            return JsonConvert.SerializeObject(companies);
-        }
+        return JsonConvert.SerializeObject(res_companies);
     }
 }
 
