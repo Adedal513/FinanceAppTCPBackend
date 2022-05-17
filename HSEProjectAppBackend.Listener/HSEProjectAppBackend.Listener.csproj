@@ -12,6 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HSEProjectAppBackend.Context\HSEProjectAppBackend.Context.csproj" />
+    <ProjectReference Include="..\HSEProjectAppBackend.Core\HSEProjectAppBackend.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Config\ListenerSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

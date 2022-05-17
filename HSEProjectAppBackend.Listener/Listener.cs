@@ -4,6 +4,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
+using HSEProjectAppBackend.Context;
+using HSE_Finance_App_Backend.Core;
+using HSEProjectAppBackend.Context.Entities;
 
 namespace HSEProjectAppBackend.Listener;
 
@@ -34,6 +37,13 @@ public class ClientObject : object
                 } while (stream.DataAvailable);
 
                 var message = builder.ToString();
+
+                Execute exe = new Execute();
+                string response = exe.ExecuteRequest(message);
+
+                byte[] comp = Encoding.Unicode.GetBytes(response);
+
+                stream.Write(comp, 0, comp.Length);
             }
         }
         catch (Exception ex)

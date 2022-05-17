@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using HSEProjectAppBackend.Context;
 using HSEProjectAppBackend.Context.Entities;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,7 @@ public class UserTools : IEntityTools
     private static readonly IConfigurationBuilder Builder =
         new ConfigurationBuilder().AddJsonFile(@"Config\UserToolsSettings.json");
 
-    public static string LoginUser(string username, string password)
+    public string LoginUser(string username, string password)
     {
         var response = new Dictionary<string, string>();
 
@@ -116,5 +117,70 @@ public class ResponseBuilder
         var json = JsonConvert.SerializeObject(response);
 
         return json;
+    }
+}
+
+public class Execute
+{
+    public Execute()
+    {
+
+    }
+
+    public string ExecuteRequest(string request)
+    {
+        if (request == null)
+            return null;
+        
+        var requestDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(request);
+        var requestType = requestDict["FUNCTION"];
+        string response;
+
+        switch (requestType)
+        {
+            case "GetCompany":
+            {
+                var companies = new CompanyTools();
+
+                return companies.GetCompany(requestDict["SYMBOL"]);
+            }
+            case "GetCompanyWithOffset":
+            {
+                var offset = int.Parse(requestDict["OFFSET"]);
+                var amount = int.Parse(requestDict["AMOUNT"]);
+
+                var companies = new CompanyTools();
+
+                return companies.GetCompaniesWithOffset(offset, amount);
+            }
+            case "Login":
+            {
+                var login = requestDict["LOGIN"];
+                var password = requestDict["PASSWORD"];
+
+                var users = new UserTools();
+
+                return users.LoginUser(login, password);
+            }
+            case "Register":
+            {
+                var login = requestDict["LOGIN"];
+                var password = requestDict["PASSWORD"];
+
+                var users = new UserTools();
+                var newUser = new User()
+                {
+                    Username = login,
+                    Password = password
+                };
+
+                return users.RegisterUser(newUser);
+            }
+            default:
+            {
+                return null;
+            }
+        }
+
     }
 }
