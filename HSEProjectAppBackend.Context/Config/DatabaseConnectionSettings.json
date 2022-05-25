@@ -1,7 +1,7 @@
 ﻿{
-	"Host": "ec2-34-242-8-97.eu-west-1.compute.amazonaws.com",
-	"Database": "dehncl3mtaaib5",
-	"User": "pkpjijzdqxxplx",
+	"Host": "ec2-54-77-40-202.eu-west-1.compute.amazonaws.com",
+	"Database": "d8kdq0mmq73j21",
+	"User": "crxcanuliilies",
 	"Port": "5432",
-	"Password": "password"
+	"Password": "502af24ca12303d06ee70ebce9ae299815c93976ce1a8dd77aab1e725ba8d495"
 }

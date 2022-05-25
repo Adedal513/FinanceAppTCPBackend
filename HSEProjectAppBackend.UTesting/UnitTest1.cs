@@ -5,6 +5,7 @@ using HSE_Finance_App_Backend.Core;
 using HSEProjectAppBackend.Context;
 using NUnit.Framework;
 using HSEProjectAppBackend.Context.Entities;
+using HSE_Finance_App_Backend.Core;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 
@@ -27,14 +28,6 @@ namespace HSEProjectAppBackend.UTesting
             Assert.Pass();
         }
 
-        [Test]
-        public void TestLogin()
-        {
-            var response = UserTools.LoginUser("test_user", "test_password");
-            var res = JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
-
-            Assert.AreEqual(res["Status"], "True");
-        }
 
         [Test]
         public void TestCompany()

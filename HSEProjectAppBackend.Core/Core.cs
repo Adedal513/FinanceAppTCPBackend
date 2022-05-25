@@ -144,7 +144,7 @@ public class Execute
 
                 return companies.GetCompany(requestDict["SYMBOL"]);
             }
-            case "GetCompanyWithOffset":
+            case "GetCompaniesWithOffset":
             {
                 var offset = int.Parse(requestDict["OFFSET"]);
                 var amount = int.Parse(requestDict["AMOUNT"]);

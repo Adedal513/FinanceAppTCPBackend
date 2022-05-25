@@ -37,7 +37,7 @@ public class ClientObject : object
                 } while (stream.DataAvailable);
 
                 var message = builder.ToString();
-
+                Console.WriteLine(message);
                 Execute exe = new Execute();
                 string response = exe.ExecuteRequest(message);
 
